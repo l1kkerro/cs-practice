@@ -5,3 +5,5 @@ if operation == '-':
     print(firstNum - secondNum)
 if operation == '*':
     print(firstNum * secondNum)
+if operation == '/':
+    print(firstNum / secondNum)
