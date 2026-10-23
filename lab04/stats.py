@@ -14,13 +14,13 @@ def parse_record(line: str) -> dict:
     }
 
 def read_valid(lines: list[str]) -> list[dict]:
-    list = []
+    valid_records = []
     for line in lines:
         try: 
-            list.append(parse_record(line))
+            valid_records.append(parse_record(line))
         except ValueError:
             continue
-    return list
+    return valid_records
 
 
 from collections import defaultdict
