@@ -1,7 +1,7 @@
 def parse_event(line : str):
     try:
          levels = ['BROKEN','DEBUG','ERROR','INFO','WARNING']
-         time, level, message = line.split(maxsplit=2)
+         time, level, message = line.strip().split(maxsplit=2)
          if level not in levels:
               raise ValueError
          return {
@@ -11,16 +11,12 @@ def parse_event(line : str):
          }
     except ValueError:
          raise ValueError
-    
+
+from collections import defaultdict
+
 def count_levels(lines):
 
-     levels = {
-          'BROKEN': 0,
-          'DEBUG': 0,
-          'ERROR': 0,
-          'INFO': 0,
-          'WARNING': 0
-     }
+     levels = defaultdict(int)
      for line in lines:
           try:
                level = parse_event(line)['level']
@@ -44,14 +40,16 @@ def top_errors(lines, n):
           except ValueError:
                continue
      sorted_error_list = sorted(error_list[1:], key=lambda x: (x[1],x[0]), reverse=True)
-     return sorted_error_list
+     return sorted_error_list[:n]
 
 def format_report(counts, errors):
-     with open('report.txt', 'a', encoding='utf-8') as file:
+     with open('report.txt', 'w', encoding='utf-8') as file:
           file.write(f'Отчет по журналу \n\n')
-          for level in counts.keys():
+          for level in sorted(counts):
                file.write(f"{level}: {counts[level]} \n")
+          file.write('\n')
+          file.write('Частые ошибки: \n')
           for error in errors:
                file.write('\n')
-               file.write(f"- {error[0][:-2]} - {error[1]}")
+               file.write(f"- {error[0]} - {error[1]}")
           file.write('\n')
