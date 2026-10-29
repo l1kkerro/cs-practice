@@ -10,11 +10,11 @@ def parse_event(line):
          raise ValueError
 def count_levels(lines):
      levels = {
-          'broken': 0,
-          'debug': 0,
-          'error': 0,
-          'info': 0,
-          'warning': 0
+          'BROKEN': 0,
+          'DEBUG': 0,
+          'ERROR': 0,
+          'INFO': 0,
+          'WARNING': 0
      }
      for line in lines:
           try:
@@ -22,3 +22,19 @@ def count_levels(lines):
                levels[level] += 1
           except ValueError:
                levels['broken'] += 1
+def top_errors(lines, n):
+     error_list = [None]
+     for line in lines:
+          try:
+               parsed = parse_event(line)
+               if parsed['level'] == 'ERROR':
+                    for index, error in error_list:
+                         if parsed('message') in error:
+                              error_list[index][1] += 1
+                              break
+                    else:
+                         error_list.append([parsed['message'], 1])
+          except ValueError:
+               continue
+     sorted_error_list = sorted(error_list, key=lambda x: (x[1],x[0]), reverse=True)
+     return sorted_error_list[:n]
