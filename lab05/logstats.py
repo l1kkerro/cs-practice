@@ -1,6 +1,9 @@
-def parse_event(line):
+def parse_event(line : str):
     try:
-         time, level, message = line.split()
+         levels = ['BROKEN','DEBUG','ERROR','INFO','WARNING']
+         time, level, message = line.split(maxsplit=2)
+         if level not in levels:
+              raise ValueError
          return {
               'time': time,
               'level': level,
@@ -22,8 +25,8 @@ def count_levels(lines):
                level = parse_event(line)['level']
                levels[level] += 1
           except ValueError:
-               levels['broken'] += 1
-
+               levels['BROKEN'] += 1
+     return levels
 def top_errors(lines, n):
      error_list = [None]
      for line in lines:
