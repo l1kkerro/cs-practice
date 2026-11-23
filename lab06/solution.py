@@ -24,6 +24,9 @@ def human_size(size):
     while s // 1024 != 0:
         depth += 1 
         s //= 1024
-    depths = ["Б","КБ","МБ","ГБ", "ТБ"]
-    return str(round(size / 1024 ** depth, 1)) + " " + depths[depth]
+    depths = [''," КБ"," МБ"," ГБ", " ТБ"]
+    if depth == 0:
+        return str(size) + ' Б'
+    return str(round(size / 1024 ** depth, 1)) + depths[depth]
 
+print(human_size(900))
