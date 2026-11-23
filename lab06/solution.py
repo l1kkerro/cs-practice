@@ -11,20 +11,19 @@ def count_by_extension(paths):
     
 def deepest_path(paths):
     mx = 0
+    mxpath = ""
     for path in paths:
         if len(path.split('/')) > mx:
             mx = len(path.split('/'))
             mxpath = path
     return mxpath
 
-    
-    
-    
-paths = ["docs/report.PDF", "notes.txt", "docs/img/logo.png", "Makefile"]
+def human_size(size):
+    depth = 0
+    s = size
+    while s // 1024 != 0:
+        depth += 1 
+        s //= 1024
+    depths = ["Б","КБ","МБ","ГБ", "ТБ"]
+    return str(round(size / 1024 ** depth, 1)) + " " + depths[depth]
 
-print(count_by_extension(paths))   # {"pdf": 1, "txt": 1, "png": 1, "": 1}
-print(deepest_path(paths))         # "docs/img/logo.png"
-
-# human_size(900)             # "900 Б"
-# human_size(1536)            # "1.5 КБ"
-# human_size(5 * 1024 * 1024) # "5.0 МБ"
