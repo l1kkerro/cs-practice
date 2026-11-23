@@ -2,7 +2,7 @@
 def count_by_extension(paths):
     extensions = {}
     for path in paths:
-        if len(path.split('.')) >= 2:
+        if '.' in path:
             extension = path.split('.')[-1].lower()
         else:
             extension = ""
@@ -28,5 +28,3 @@ def human_size(size):
     if depth == 0:
         return str(size) + ' Б'
     return str(round(size / 1024 ** depth, 1)) + depths[depth]
-
-print(human_size(900))
