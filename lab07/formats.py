@@ -1,7 +1,7 @@
 def csv_to_records(text):
     result = []
     if ',' in text:
-        lines = text.split('\n')
+        lines = text.rstrip('\n').split('\n')
         title = lines[0].split(',')
         for line in lines[1:]:
             value = line.split(',')
