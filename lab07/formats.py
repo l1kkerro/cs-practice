@@ -5,7 +5,7 @@ def csv_to_records(text):
         title = lines[0].split(',')
         for line in lines[1:]:
             value = line.split(',')
-            result.append({title[0]:value[0],title[1]:value[1]})
+            result.append({title[0].strip():value[0].strip(),title[1].strip():value[1].strip()})
         return result
     else:
         return result
@@ -61,3 +61,4 @@ def merge_by_key(rows, extra, key):
         result.append(merged_row)
     return result
 
+print(csv_to_records("город, цена \n Азов , 100 \n"))
