@@ -16,14 +16,11 @@ def parse_value(value):
         return True
     if value_low in ['false','no']:
         return False
-    try:
+    if all(s in ['0','1','2','3','4','5','6','7','8','9',',','.'] for s in value):
+        if any(s in [',','.'] for s in value):
+            return float(value)
         return int(value)
-    except ValueError:
-        pass
-    try:
-        return(value)
-    except ValueError:
-        return value
+    return(value)
     
 def parse_settings(lines):
     result = {}
